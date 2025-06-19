@@ -35,6 +35,15 @@ app.post('/log', (req, res) => {
   res.sendStatus(200);
 });
 
+app.get('/download-logs', (req, res) => {
+  const LOG_FILE = path.join(__dirname, 'logs.json');
+  fs.readFile(LOG_FILE, 'utf8', (err, data) => {
+    if (err) return res.status(500).send('Error reading logs.');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(data);
+  });
+});
+
 app.listen(3000, () => {
   console.log('Server running at http://localhost:3000');
 });
